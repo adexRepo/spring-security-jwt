@@ -1,2 +1,2 @@
-# spring-security-jwt
+# Spring-Boot-Security-JWT
 Spring Security with JWT + Access and Refresh Tokens
