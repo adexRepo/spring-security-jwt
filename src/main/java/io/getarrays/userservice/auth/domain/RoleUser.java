@@ -1,4 +1,4 @@
-package io.getarrays.userservice.domain;
+package io.getarrays.userservice.auth.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

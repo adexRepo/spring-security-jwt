@@ -1,9 +1,9 @@
-package io.getarrays.userservice.service;
+package io.getarrays.userservice.auth.service;
 
 import java.util.List;
 
-import io.getarrays.userservice.domain.RoleUser;
-import io.getarrays.userservice.domain.UserBase;
+import io.getarrays.userservice.auth.domain.RoleUser;
+import io.getarrays.userservice.auth.domain.UserBase;
 
 public interface UserService {
     

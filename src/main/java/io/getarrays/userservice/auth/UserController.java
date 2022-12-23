@@ -1,5 +1,4 @@
-package io.getarrays.userservice.api;
-
+package io.getarrays.userservice.auth;
 import java.net.URI;
 import java.util.List;
 
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import io.getarrays.userservice.domain.RoleUser;
-import io.getarrays.userservice.domain.UserBase;
-import io.getarrays.userservice.service.UserService;
+import io.getarrays.userservice.auth.domain.RoleUser;
+import io.getarrays.userservice.auth.domain.UserBase;
+import io.getarrays.userservice.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController 
@@ -23,10 +22,18 @@ public class UserController {
     
     private final UserService userService;
 
+    /* -------------------------------------------------------------------------- */
+    /*                                 GET METHOD                                 */
+    /* -------------------------------------------------------------------------- */
+
     @GetMapping("/users")
     public ResponseEntity<List<UserBase>> getUser(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 POST METHOD                                */
+    /* -------------------------------------------------------------------------- */
 
     @PostMapping("/user/save")
     public ResponseEntity<UserBase> saveUser(@RequestBody UserBase user){
@@ -41,5 +48,12 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userService.saveRole(roleUser));
     }
+
+    // @PostMapping("/role/add-to-user")
+    // public ResponseEntity<RoleUser> saveRole(@RequestBody RoleUser roleUser){
+    //     URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
+
+    //     return ResponseEntity.created(uri).body(userService.saveRole(roleUser));
+    // }
 
 }
