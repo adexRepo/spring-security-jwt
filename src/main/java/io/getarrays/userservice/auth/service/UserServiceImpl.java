@@ -1,14 +1,14 @@
-package io.getarrays.userservice.service;
+package io.getarrays.userservice.auth.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.getarrays.userservice.domain.RoleUser;
-import io.getarrays.userservice.domain.UserBase;
-import io.getarrays.userservice.repository.RoleUserRepository;
-import io.getarrays.userservice.repository.UserBaseRepository;
+import io.getarrays.userservice.auth.domain.RoleUser;
+import io.getarrays.userservice.auth.repository.UserBaseRepository;
+import io.getarrays.userservice.auth.domain.UserBase;
+import io.getarrays.userservice.auth.repository.RoleUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
