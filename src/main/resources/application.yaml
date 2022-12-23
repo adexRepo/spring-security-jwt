@@ -10,7 +10,7 @@ spring:
         password: Y%RdGm!-Tg/2zw(
     jpa:
         hibernate:            
-            ddl-auto: create-drop
+            ddl-auto: create
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
