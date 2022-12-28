@@ -1,27 +1,57 @@
 package io.getarrays.userservice.auth.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.getarrays.userservice.auth.domain.RoleUser;
-import io.getarrays.userservice.auth.repository.UserBaseRepository;
 import io.getarrays.userservice.auth.domain.UserBase;
 import io.getarrays.userservice.auth.repository.RoleUserRepository;
+import io.getarrays.userservice.auth.repository.UserBaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,UserDetailsService {
 
     private final UserBaseRepository userRepo;
     private final RoleUserRepository roleRepo;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserBase userNow = userRepo.findByUsername(username);
+
+        if(userNow == null){
+            log.error("User not Found in the database");
+            throw new UsernameNotFoundException(username);
+        }else {
+            log.error("User Found in the database: {}", username);
+        }
+
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        userNow.getRoles().forEach(role ->{
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        
+        UserDetails newUser = new User(userNow.getUsername(), userNow.getPassword(), authorities);
+        return newUser;
+    }
 
     @Override
     public UserBase saveUser(UserBase user) {
         log.info("Saving new User: {}",user.getName());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
     
@@ -52,5 +82,4 @@ public class UserServiceImpl implements UserService {
         user.getRoles().add(role);
     }
 
-    
 }
